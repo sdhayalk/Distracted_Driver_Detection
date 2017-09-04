@@ -4,7 +4,7 @@ import pickle
 import cv2
 import os
 
-from preprocessing import get_dataset
+from preprocessing import get_dataset, get_test_dataset
 from keras.layers import Input, Dense, Convolution2D, MaxPooling2D, merge, ZeroPadding2D, AveragePooling2D, Flatten, Dropout, Dense, Activation, BatchNormalization
 from keras.regularizers import l2
 from keras.models import Model, model_from_json
@@ -41,33 +41,14 @@ def inception(input, prefix, n1x1, r3x3, n3x3, r5x5, n5x5, m1x1):
     return output
 
 
-dataset, _ = get_dataset(train_directory)
-np.random.shuffle(dataset)
-print(dataset.shape)
-
-dataset_features = []
-dataset_labels = []
-for arr in dataset:
-    dataset_features.append(arr[0])
-    dataset_labels.append(arr[1])
-
-dataset_features = np.array(dataset_features)
-dataset_labels = np.array(dataset_labels)
+dataset_test_features, file_names = get_test_dataset(test_directory)
+print(dataset_test_features.shape)
+print(file_names.shape)
 
 # normalizing
-dataset_features = dataset_features / 255.0
+dataset_test_features = dataset_test_features / 255.0
 
-# divide
-dataset_test_features = dataset_features[20000:dataset_features.shape[0], :]
-dataset_test_labels = dataset_labels[20000:dataset_labels.shape[0], :]
-dataset_train_features = dataset_features[0:20000, :]
-dataset_train_labels = dataset_labels[0:20000, :]
-
-# reshaping
-dataset_train_features = dataset_train_features.reshape((-1, dimension, dimension, number_of_channels))
 dataset_test_features = dataset_test_features.reshape((-1, dimension, dimension, number_of_channels))
-print('dataset_train_features.shape:', dataset_train_features.shape)
-print('dataset_train_labels.shape:', dataset_train_labels.shape)
 
 # googlenet start:
 input = Input(shape=(dimension, dimension, number_of_channels))
@@ -129,23 +110,30 @@ epochs = 50
 lrate = 0.0001
 decay = lrate/epochs
 adam = Adam(decay=decay)
-# early_stopping = EarlyStopping(patience=2)
 
-# checkpoint
-filepath = "/output/weights-improvement-{epoch:02d}-{val_acc:.2f}.hdf5"
-checkpoint = ModelCheckpoint(filepath, monitor='val_acc', verbose=1, save_best_only=True, mode='max')
-callbacks_list = [checkpoint]
+
+''' testing and evaluation '''
 
 model = Model(inputs=input, outputs=output_layer)
-model.compile(loss='categorical_crossentropy', optimizer=adam, metrics=['accuracy'])
-print(model.summary())
-model.fit(dataset_train_features, dataset_train_labels, validation_data=(dataset_test_features, dataset_test_labels), epochs=epochs, batch_size=batch_size, callbacks=callbacks_list)
+model.load_weights('G:/DL/distracted-driver-new/floydhub/weights-improvement-03-0.93.h5py')
 predictions = model.predict(dataset_test_features)
 
+print(predictions)
+# np.savetxt("/output/googlenet.csv", predictions, delimiter=",")
+with open('G:/DL/distracted-driver-new/floydhub/googlenet.csv','w') as file:
+    file.write('img,c0,c1,c2,c3,c4,c5,c6,c7,c8,c9')
+    file.write('\n')
+    example_number = 0
 
-model_json = model.to_json()
-with open("/output/model_g_1.json", "w") as json_file:
-    json_file.write(model_json)
-# serialize weights to HDF5
-model.save_weights("/output/model_g_1.h5")
-print("Saved model to disk")
+    for file_name in file_names:
+        file.write(file_name)
+        file.write(',')
+
+        for i in range(0, 9):
+            value = predictions[example_number][i]
+            file.write(str('{:f}'.format(value)))
+            file.write(',')
+
+        file.write(predictions[example_number][i])
+        file.write('\n')
+        example_number += 1

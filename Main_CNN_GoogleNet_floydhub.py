@@ -41,7 +41,7 @@ def inception(input, prefix, n1x1, r3x3, n3x3, r5x5, n5x5, m1x1):
     return output
 
 
-dataset = get_dataset(train_directory)
+dataset, _ = get_dataset(train_directory)
 np.random.shuffle(dataset)
 print(dataset.shape)
 

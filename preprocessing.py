@@ -19,9 +19,11 @@ def resize_grayscale(directory, d1, d2):
 def get_dataset(directory):
     dataset = []
     count = 0
+    file_names = []
     for current_dir in os.walk(directory):
         for current_file in current_dir[2]:
             current_file_path = current_dir[0] + "/" + current_file
+            file_names.append(current_file)
 
             label_index = int(current_dir[0][-1])
             label = np.zeros(10, dtype=int)
@@ -38,9 +40,30 @@ def get_dataset(directory):
             count += 1
             print('files processed: ', count)
             # if count == 1000:
-            #     return np.array(dataset)
+            #     return np.array(dataset), np.array(file_names)
 
-    return np.array(dataset)
+    return np.array(dataset), np.array(file_names)
+
+def get_test_dataset(directory):
+    dataset = []
+    count = 0
+    file_names = []
+    for current_dir in os.walk(directory):
+        print(current_dir[0])
+        for current_file in current_dir[2][:40000]:
+            current_file_path = current_dir[0] + "/" + current_file
+            file_names.append(current_file)
+
+            img = cv2.imread(current_file_path)
+            img = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
+            dataset.append(img)
+
+            count += 1
+            print('files processed: ', count)
+            if count == 40000:
+                return np.array(dataset), np.array(file_names)
+
+    return np.array(dataset), np.array(file_names)
 
 
 train_directory = 'G:/DL/distracted-driver-new/driver_imgs_list.csv/train'
@@ -48,3 +71,4 @@ test_directory = 'G:/DL/distracted-driver-new/driver_imgs_list.csv/test'
 
 # resize_grayscale(train_directory, 224, 224)
 # resize_grayscale(test_directory, 224, 224)
+
