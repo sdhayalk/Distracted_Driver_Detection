@@ -3,7 +3,6 @@ import os
 import cv2
 
 def resize_grayscale(directory, d1, d2):
-    dataset = []
     count = 0
     for current_dir in os.walk(directory):
         for current_file in current_dir[2]:
@@ -25,15 +24,21 @@ def get_dataset(directory):
             current_file_path = current_dir[0] + "/" + current_file
 
             label_index = int(current_dir[0][-1])
-            label = np.zeros(10)
+            label = np.zeros(10, dtype=int)
             label[label_index] = 1
 
             img = cv2.imread(current_file_path)
+            img = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
 
             example = []
             example.append(img)
             example.append(label)
             dataset.append(example)
+
+            count += 1
+            print('files processed: ', count)
+            # if count == 1000:
+            #     return np.array(dataset)
 
     return np.array(dataset)
 
