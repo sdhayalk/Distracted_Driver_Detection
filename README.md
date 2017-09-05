@@ -33,7 +33,11 @@ Achieved an accuracy of 93 % using about 20000 training samples and 2400 testing
 
 ### References:
 [1] [Distracted Driver Dataset competition from Kaggle](https://www.kaggle.com/c/state-farm-distracted-driver-detection)
+
 [2] Szegedy, C., Liu, W., Jia, Y., Sermanet, P., Reed, S., Anguelov, D., ... & Rabinovich, A. (2015). Going deeper with convolutions. In Proceedings of the IEEE conference on computer vision and pattern recognition (pp. 1-9).
+
 [3] Ioffe, S., & Szegedy, C. (2015, June). Batch normalization: Accelerating deep network training by reducing internal covariate shift. In International Conference on Machine Learning (pp. 448-456).
+
 [4] Srivastava, N., Hinton, G. E., Krizhevsky, A., Sutskever, I., & Salakhutdinov, R. (2014). Dropout: a simple way to prevent neural networks from overfitting. Journal of machine learning research, 15(1), 1929-1958.
+
 [5] [FloydHub](https://www.floydhub.com/)
