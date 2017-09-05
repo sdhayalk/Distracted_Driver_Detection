@@ -15,7 +15,7 @@ This project and dataset is derived from Distracted Driver Dataset competition f
 7. c6: drinking
 8. c7: reaching behind
 9. c8: hair and makeup
-10. c9: talking to passenge
+10. c9: talking to passenger
 ```
 Identifying whether the user is distracted can be very useful information for the autonomous agent in self-driving cars, and aid or alert the driver if necessary. This helps keeping the driver as well as the passengers safe from mishap due to driver's lack of attention.
 
