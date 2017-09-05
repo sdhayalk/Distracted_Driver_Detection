@@ -20,10 +20,20 @@ This project and dataset is derived from Distracted Driver Dataset competition f
 Identifying whether the user is distracted can be very useful information for the autonomous agent in self-driving cars, and aid or alert the driver if necessary. This helps keeping the driver as well as the passengers safe from mishap due to driver's lack of attention.
 
 ## Solution:
-I implement 'GoogLeNet' architecture with Inception modules [2], which is a deep convolutional neural network that excels in image based classification. GoogLeNet, developed by researchers at Google, has been the winner of Imagenet ILSVRC 2014 challenge [2]. To enhance generalization and a bit faster training, I added Dropout and Batch Normalization layers between layers. Batch Normalization also solved the issue of predicting only one class for all examples.
+I implement 'GoogLeNet' architecture with Inception modules [2], which is a deep convolutional neural network that excels in image based classification. GoogLeNet, developed by researchers at Google, has been the winner of Imagenet ILSVRC 2014 challenge [2]. To enhance generalization, avoid over-fitting and a bit faster training, I added Dropout [3] and Batch Normalization [4] layers between layers.
 
 ### Dataset:
 The dataset was obtained from Distracted Driver Dataset competition from Kaggle [1]. The dataset was well balanced across all classes, making things a bit easier. I first resize the dataset to 224x224, and grayscale it, thus getting only one channel. Also, normalize it between 0 and 1.
 
 Example images obtained from Kaggle:
 [Driver texting, calling, etc.](https://kaggle2.blob.core.windows.net/competitions/kaggle/5048/media/drivers_statefarm.png)
+
+## Results:
+Achieved an accuracy of 93 % using about 20000 training samples and 2400 testing samples. The code was run on FloydHub [5].
+
+### References:
+[1] [Distracted Driver Dataset competition from Kaggle](https://www.kaggle.com/c/state-farm-distracted-driver-detection)
+[2] Szegedy, C., Liu, W., Jia, Y., Sermanet, P., Reed, S., Anguelov, D., ... & Rabinovich, A. (2015). Going deeper with convolutions. In Proceedings of the IEEE conference on computer vision and pattern recognition (pp. 1-9).
+[3] Ioffe, S., & Szegedy, C. (2015, June). Batch normalization: Accelerating deep network training by reducing internal covariate shift. In International Conference on Machine Learning (pp. 448-456).
+[4] Srivastava, N., Hinton, G. E., Krizhevsky, A., Sutskever, I., & Salakhutdinov, R. (2014). Dropout: a simple way to prevent neural networks from overfitting. Journal of machine learning research, 15(1), 1929-1958.
+[5] [FloydHub](https://www.floydhub.com/)
