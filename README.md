@@ -20,7 +20,7 @@ This project and dataset is derived from Distracted Driver Dataset competition f
 Identifying whether the user is distracted can be very useful information for the autonomous agent in self-driving cars, and aid or alert the driver if necessary. This helps keeping the driver as well as the passengers safe from mishap due to driver's lack of attention.
 
 ## Solution:
-I implement 'GoogLeNet' architecture with Inception modules [2], which is a deep convolutional neural network that excels in image based classification. GoogLeNet, developed by researchers at Google, has been the winner of Imagenet ILSVRC 2014 challenge [2]. To enhance generalization, avoid over-fitting and a bit faster training, I added Dropout [3] and Batch Normalization [4] layers between layers.
+I implemented 'GoogLeNet' architecture with Inception modules [2], which is a deep convolutional neural network that excels in image based classification. GoogLeNet, developed by researchers at Google, has been the winner of Imagenet ILSVRC 2014 challenge [2]. To enhance generalization, avoid over-fitting and a bit faster training, I added Dropout [3] and Batch Normalization [4] layers between layers.
 
 ### Dataset:
 The dataset was obtained from Distracted Driver Dataset competition from Kaggle [1]. The dataset was well balanced across all classes, making things a bit easier. I first resize the dataset to 224x224, and grayscale it, thus getting only one channel. Also, normalize it between 0 and 1.
